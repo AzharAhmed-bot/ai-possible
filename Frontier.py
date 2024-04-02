@@ -32,7 +32,7 @@ class StackFrontier():
     # Check for a particular state in the frontier
     def contains_particular_state(self,state):
         return any(node.state==state for node in self.frontier)
-    # Stage a particulat node
+    # Stage a particular node
     def remove(self):
         if self.empty():
             raise Exception("The frontier is empty")
@@ -40,7 +40,7 @@ class StackFrontier():
             node=self.frontier[-1]
             self.frontier=self.frontier[:-1]
             return node 
-
+  
 
 class QueueFrontier(StackFrontier):
     def remove(self):
