@@ -58,7 +58,7 @@ The algorithm has the following functions:
 
 ## Minimax
 This is a type of Adversarial search algorithm that is represented by 1 as a winning condition and -1 as losing.
-
+![Screenshot 2024-04-04 154229](https://github.com/AzharAhmed-bot/cs50-ai-course/assets/126657393/91cd16c0-7bef-41e8-9d61-c1b060423172)
 **How the algorithm works**:
 Minimax simulates all the possible games that can be played from the current state upto the terminal. Each state states its value as whether its -1,0 or 1. The maximizing player always tries to maximize the value to 1 while the minimizing player tries to minimize the value to -1. At a worst case scenario both players opt for 0 rather than let the other win. 
 Given a state s;
@@ -95,6 +95,7 @@ This is a way of optimizing minimax algorithms.After establishing the initial va
 
 ## Depth Limited Minimax
 Depth limited minimax considers only a pre-defined number of games before it stops without reaching the terminal. However, we don't get the precise values from each state, thus we have the **evaluation function** that estimates the utility of a given state.
+![Screenshot 2024-04-04 161027](https://github.com/AzharAhmed-bot/cs50-ai-course/assets/126657393/d1301f2d-50c6-4a80-807a-e2296cab17b1)
 
 # Conclusion
 In conclusion, the study of search algorithms illuminates the intricate dynamics between problem exploration and exploitation, offering insights into how agents navigate complex solution spaces. From the foundational concepts of states, actions, and transitional models to the diverse strategies of uninformed and informed search algorithms, each facet contributes to our understanding of efficient problem-solving. Techniques such as Alpha-Beta Pruning and Depth Limited Minimax further refine our approaches, emphasizing the ongoing pursuit of optimization and scalability in computational problem-solving. As we continue to delve deeper into search algorithms, we not only refine our ability to solve diverse challenges but also advance the broader landscape of artificial intelligence and intelligent systems.
