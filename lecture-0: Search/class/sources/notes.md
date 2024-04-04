@@ -92,10 +92,11 @@ The value of v in both cases is opposite of the expected value; this is because 
 This is a way of optimizing minimax algorithms.After establishing the initial value of one action,if there's is evidence that the following action can bring the opponent to get a better score than the one already established action,there is no need to further investigate this action because its least favorable.
 - There are a total of 255,168 tic tac toe games that can be played from the inital empty state. And 10^29000 games of chess that can be played. 
 - Sometimes simulating all possible games can be impossible due to limited computation power.Thus:
+![Screenshot 2024-04-04 161027](https://github.com/AzharAhmed-bot/cs50-ai-course/assets/126657393/d1301f2d-50c6-4a80-807a-e2296cab17b1)
 
 ## Depth Limited Minimax
 Depth limited minimax considers only a pre-defined number of games before it stops without reaching the terminal. However, we don't get the precise values from each state, thus we have the **evaluation function** that estimates the utility of a given state.
-![Screenshot 2024-04-04 161027](https://github.com/AzharAhmed-bot/cs50-ai-course/assets/126657393/d1301f2d-50c6-4a80-807a-e2296cab17b1)
+
 
 # Conclusion
 In conclusion, the study of search algorithms illuminates the intricate dynamics between problem exploration and exploitation, offering insights into how agents navigate complex solution spaces. From the foundational concepts of states, actions, and transitional models to the diverse strategies of uninformed and informed search algorithms, each facet contributes to our understanding of efficient problem-solving. Techniques such as Alpha-Beta Pruning and Depth Limited Minimax further refine our approaches, emphasizing the ongoing pursuit of optimization and scalability in computational problem-solving. As we continue to delve deeper into search algorithms, we not only refine our ability to solve diverse challenges but also advance the broader landscape of artificial intelligence and intelligent systems.
