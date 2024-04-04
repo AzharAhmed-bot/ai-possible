@@ -48,4 +48,53 @@ Pronounced as 'A star seach', the algorithm expands on the nodes that has the lo
   - Consistent.In other words, the estimated cost of the successive node plus the cost to reach the node should always be greater that or equal to the the cost of the current node to the goal state ie h(n)<= h(n')+g(n).
 
 ### Adversarial search 
-Ths
+This type of algorithm the agent attempts to reach a certain goal to win but is being opposed by an adversary who wants it to lose. This is exhibited in games such as chess, tic tac toe among others.
+The algorithm has the following functions:
+1. The S_o: This is the initial state; in the case of a game its the empty board.
+2. Player: This function given a state returns which players turn it is to play.
+3. Result: This function given a state and an action returns a new state.
+4. Terminal: This function given a state checks if the game is finished and returns true if win or tie and false otherwise.
+5. Utility: This function given a state returns the utilty value of the state ie if -1,0,1.
+
+## Minimax
+This is a type of Adversarial search algorithm that is represented by 1 as a winning condition and -1 as losing.
+
+**How the algorithm works**:
+Minimax simulates all the possible games that can be played from the current state upto the terminal. Each state states its value as whether its -1,0 or 1. The maximizing player always tries to maximize the value to 1 while the minimizing player tries to minimize the value to -1. At a worst case scenario both players opt for 0 rather than let the other win. 
+Given a state s;
+- The maximizing player picks an action a from the set of Actions(a) that produces the highest value of Min-Value(Result(s,a)) ie it picks the highest value from the result of the previous player who tried to minimize the value.
+- The minimizing player picks an action a from a set of Action(a) that produces the lowest value of Max_Value(Result(s,a)) ie it picks the lowest value from the result of the previous player who tried to maximize the value.
+
+So What are this 2 functions that are called recursively by each other?
+**Psuedocode**
+- Max_Value(state) function:
+  - if terminal(state): 
+    - return Utility 
+  - else:
+    - let v=-∞ 
+    - for action in Action(state)
+    - v=Max(v,Min_Value(Result(s,a)))
+    - return v
+- Min_Value(state) function:
+  - if terminal(state):
+    - return Utility
+  - else:
+    - v=∞
+    - for action in Action(state)
+    - v=Min(v,Max_Value(Result(s,a)))
+    - return v
+
+The value of v in both cases is opposite of the expected value; this is because each function is always trying to achieve the opposite value of the other.
+
+
+## Alpha beta prunning
+
+This is a way of optimizing minimax algorithms.After establishing the initial value of one action,if there's is evidence that the following action can bring the opponent to get a better score than the one already established action,there is no need to further investigate this action because its least favorable.
+- There are a total of 255,168 tic tac toe games that can be played from the inital empty state. And 10^29000 games of chess that can be played. 
+- Sometimes simulating all possible games can be impossible due to limited computation power.Thus:
+
+## Depth Limited Minimax
+Depth limited minimax considers only a pre-defined number of games before it stops without reaching the terminal. However, we don't get the precise values from each state, thus we have the **evaluation function** that estimates the utility of a given state.
+
+# Conclusion
+In conclusion, the study of search algorithms illuminates the intricate dynamics between problem exploration and exploitation, offering insights into how agents navigate complex solution spaces. From the foundational concepts of states, actions, and transitional models to the diverse strategies of uninformed and informed search algorithms, each facet contributes to our understanding of efficient problem-solving. Techniques such as Alpha-Beta Pruning and Depth Limited Minimax further refine our approaches, emphasizing the ongoing pursuit of optimization and scalability in computational problem-solving. As we continue to delve deeper into search algorithms, we not only refine our ability to solve diverse challenges but also advance the broader landscape of artificial intelligence and intelligent systems.
