@@ -38,3 +38,14 @@ However, at its very **worst**, the algorithm may choose the wrong path and prov
  The algorithm has the advantage that its guaranteed to find the optimal solution. However, the algorithm may take longer than the minimal run time.
 
 ## Informed Search
+
+### Greedy best first search
+This algorithm expands only on the nodes that is closest to the goal state using a heuristic function,h(n). The function takes in a state and returns the estimate distance between the node and the goal state. The function ignores walls or obstructions in its way. In the case of a maze puzzle the distance is called **manhattan distance**. The efficiency of gbfs is determined by its h(n) thus its name **greedy** which will always try to take the path that will cost less based on the (x,y) co-ordinates. However, its important to note that in some cases the heuristic function can make the algorithm slower, and it'll be better to use uninformed search.
+
+###  A* Search
+Pronounced as 'A star seach', the algorithm expands on the nodes that has the lowest value of h(n),**estimated cost to the goal** and g(n),**the cost to reach the node** ie g(n)+h(n). If the algorithm finds a node with the lowest value of h(n)+g(n), it'll ditch the other path with a higher value. However, for A* to be optimal, the heuristic function should be:
+  - Admissible.In other words, its should never overestimate the true cost.
+  - Consistent.In other words, the estimated cost of the successive node plus the cost to reach the node should always be greater that or equal to the the cost of the current node to the goal state ie h(n)<= h(n')+g(n).
+
+### Adversarial search 
+Ths
