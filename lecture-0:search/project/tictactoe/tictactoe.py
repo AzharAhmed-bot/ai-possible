@@ -7,6 +7,7 @@ import math
 X = "X"
 O = "O"
 EMPTY = None
+INFINITY = 1e3
 
 
 def initial_state():
@@ -35,20 +36,20 @@ def player(board):
     return X
 
     
-
-
 def actions(board):
     """
     Returns set of all possible actions (i, j) available on the board.
+    
+    An available in this game refers to a position on board where no X nor O is 
+    chosen yet.
     """
-    possible_actions=set()
-    for i in range(len(board)):
-        for j in range(len(board)):
-            if board[i][j]==EMPTY:
-                possible_actions.add((i,j))
-    return possible_actions
+    action_set = set()
+    for row_index, row in enumerate(board):
+        for col_index, value in enumerate(row):
+            if value not in (X, O):
+                action_set.add((row_index, col_index))
 
-
+    return action_set
 
 
 def result(board, action):
@@ -130,41 +131,37 @@ def minimax(board):
         return None
     
     current_player = player(board)
-    candidate_action = None 
-    if current_player == X:
-        candidate_outcome = -math.inf 
-        for action in actions(board):
-            previous_board_player = result(board, action)
-            opponent_value = min_value(previous_board_player)
+    if current_player== X:
+        candidate_outcome=-math.inf
+        for a in actions(board):
+            possible_board=result(board,a)
+            opponent_value=min_value(possible_board)
+            if opponent_value> candidate_outcome:
+                candidate_outcome=opponent_value
+                candidate_action=a
+    
+    if current_player==O:
+        candidate_outcome=math.inf
+        for a in actions(board):
+            possible_board=result(board,a)
+            opponent_value=max_value(possible_board)
             if opponent_value < candidate_outcome:
-                candidate_outcome = opponent_value
-                candidate_action = action
-
-    elif current_player == O:
-        candidate_outcome = math.inf
-        for action in actions(board):
-            previous_board_player = result(board, action)
-            opponent_value = max_value(previous_board_player)
-            if opponent_value > candidate_outcome:
-                candidate_outcome = opponent_value
-                candidate_action = action
+                candidate_outcome=opponent_value
+                candidate_action=a
 
     return candidate_action
 
-                
+    
+    
 
-
-
-
-
-
-
+            
 def max_value(board):
     if terminal(board):
         return utility(board)
     v=-math.inf
     for a in actions(board):
-        v=max(v,min_value(result(board,a)))
+        new_board=result(board,a)
+        v=max(v,min_value(new_board))
     return v
 
 
@@ -174,7 +171,8 @@ def min_value(board):
     
     v=math.inf
     for a in actions(board):
-        v=max(v,max_value(result(board,a)))
+        new_board=result(board,a)
+        v=min(v,max_value(new_board))
     return v
 
     
