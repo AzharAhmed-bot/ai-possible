@@ -22,19 +22,18 @@ def player(board):
     """
     Returns player who has the next turn on a board.
     """
-    # x_counter=0
-    # o_counter=0
+    x_counter=0
+    o_counter=0
 
-    # for row in board:
-    #     x_counter+=row.count(X)
-    #     o_counter+=row.count(O)
+    for row in board:
+        x_counter+=row.count(X)
+        o_counter+=row.count(O)
     
-    # if o_counter<x_counter:
-    #     return O
+    if o_counter<x_counter:
+        return O
     
-    # return X
-    players_turn=X if sum(row.count(X) for row in board)<= sum(row.count(O) for row in board) else O
-    return players_turn
+    return X
+
     
 
 
@@ -46,7 +45,7 @@ def actions(board):
     for i in range(len(board)):
         for j in range(len(board)):
             if board[i][j]==EMPTY:
-                possible_actions.add(i,j)
+                possible_actions.add((i,j))
     return possible_actions
 
 
@@ -55,19 +54,23 @@ def actions(board):
 def result(board, action):
     """
     Returns the board that results from making move (i, j) on the board.
+
+    Cannot overwrite values.
     """
+    # check if action is a valid action
     if action not in actions(board):
-        raise Exception("You have performed an wrong action")
+        raise Exception("You have performed an invalid action.")
+
+    # whose turn it is now? result will be either X or O
+    current_player = player(board)
+
+    # create a deep copy so as not to substitute values
+    new_board = copy.deepcopy(board)
     
-    current_player=player(board)
-    new_board=copy.deepcopy(board)
+    row_index, col_index = action 
+    new_board[row_index][col_index] = current_player
 
-    # players_turn=X if sum(row.count(X) for row in board)<= sum(row.count(O) for row in board) else O
-
-    i,j=action
-    new_board[i][j]=current_player
     return new_board
-
 
 
 def winner(board):
@@ -92,16 +95,16 @@ def terminal(board):
     """
     Returns True if game is over, False otherwise.
     """
-    winner_winner_chicken_dinner=False
     game_winner=winner(board)
     if game_winner:
-        winner_winner_chicken_dinner=True
-    for i in range(len(board)):
-        for j in range(len(board)):
-            if board[i][j] != EMPTY:
-                winner_winner_chicken_dinner=True
-
-    return winner_winner_chicken_dinner
+        return True
+    
+    for  row in board:
+        for cell in row:
+            if cell is None:
+                return False
+            
+    return False
 
 
 def utility(board):
@@ -126,27 +129,28 @@ def minimax(board):
     if terminal(board):
         return None
     
-    current_player=player(board)
-
-    if current_player==X:
-        candidate_outcome=-math.inf 
+    current_player = player(board)
+    candidate_action = None 
+    if current_player == X:
+        candidate_outcome = -math.inf 
         for action in actions(board):
-            previous_board_player=result(board,action)
-            opponent_value=min_value(previous_board_player)
-            if opponent_value<candidate_outcome:
-                candidate_outcome=opponent_value
-                candidate_action=action
+            previous_board_player = result(board, action)
+            opponent_value = min_value(previous_board_player)
+            if opponent_value < candidate_outcome:
+                candidate_outcome = opponent_value
+                candidate_action = action
 
-    elif current_player==O:
-        candidate_outcome=math.inf
+    elif current_player == O:
+        candidate_outcome = math.inf
         for action in actions(board):
-            previous_board_player=result(board,action)
-            opponent_value=max_value(previous_board_player)
-            if opponent_value>candidate_outcome:
-                candidate_outcome=opponent_value
-                candidate_action=action
+            previous_board_player = result(board, action)
+            opponent_value = max_value(previous_board_player)
+            if opponent_value > candidate_outcome:
+                candidate_outcome = opponent_value
+                candidate_action = action
 
     return candidate_action
+
                 
 
 
