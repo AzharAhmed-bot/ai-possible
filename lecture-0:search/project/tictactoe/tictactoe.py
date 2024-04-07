@@ -29,11 +29,11 @@ def player(board):
     for row in board:
         x_counter+=row.count(X)
         o_counter+=row.count(O)
-    
     if o_counter<x_counter:
         return O
     
     return X
+    
 
     
 def actions(board):
@@ -43,13 +43,14 @@ def actions(board):
     An available in this game refers to a position on board where no X nor O is 
     chosen yet.
     """
-    action_set = set()
-    for row_index, row in enumerate(board):
-        for col_index, value in enumerate(row):
-            if value not in (X, O):
-                action_set.add((row_index, col_index))
+    possible_actions=set()
+    for r_index, row in enumerate(board):
+        for c_index,col in enumerate(row):
+            if  col == EMPTY:
+                possible_actions.add((r_index,c_index))
+    
+    return possible_actions
 
-    return action_set
 
 
 def result(board, action):
@@ -58,18 +59,16 @@ def result(board, action):
 
     Cannot overwrite values.
     """
-    # check if action is a valid action
     if action not in actions(board):
-        raise Exception("You have performed an invalid action.")
-
-    # whose turn it is now? result will be either X or O
+        raise Exception("Invalid action")
+    
+    new_board = copy.deepcopy(board)
     current_player = player(board)
 
-    # create a deep copy so as not to substitute values
-    new_board = copy.deepcopy(board)
-    
-    row_index, col_index = action 
-    new_board[row_index][col_index] = current_player
+    # Unpack the action tuple into row and column indices
+    i, j = action  
+    # Update the cell at (i, j) with the current player's symbol
+    new_board[i][j] = current_player
 
     return new_board
 
@@ -78,16 +77,40 @@ def winner(board):
     """
     Returns the winner of the game, if there is one.
     """
-    for i in range(len(board)):
-        if board[i][0]==board[i][1]==board[i][2] != EMPTY:
-            return board[i][0]
-        if board[0][i]==board[1][i]==board[2][i] != EMPTY:
-            return board[0][i]
-    if board[0][0]==board[1][1]==board[2][2]!=EMPTY:
-        return board[0][0]
-    if board[0][2]==board[1][1]==board[2][0] !=EMPTY:
-        return board[0][2]
+    # Square box it'll return 3
+    board_size=len(board)
+
+    # Horizontal winner
+    for row in board:
+        if row.count(X)==board_size:
+            return X
+        if row.count(O)==board_size:
+            return O
+        
+    # Vertical winner
+    for c_index in range(board_size):
+        col=[row[c_index] for row in board]
+        if col.count(X)==board_size:
+            return X
+        if col.count(O)==board_size:
+            return O
+        
+            
+    # Diagonal winner
+    main_diagonal=[board[i][i] for i in range(board_size)]
+    anti_diagonal=[board[i][board_size-1-i] for i in range(board_size)]
+            
+    if main_diagonal.count(X)==board_size  or anti_diagonal.count(X)==board_size:
+        return X
+    if main_diagonal.count(O)==board_size or anti_diagonal.count(O)==board_size:
+        return O
+    
+
     return None
+            
+
+
+    
     
     
 
@@ -96,15 +119,16 @@ def terminal(board):
     """
     Returns True if game is over, False otherwise.
     """
-    game_winner=winner(board)
-    if game_winner:
+    player_won=winner(board)
+
+    # X, O who won
+    if player_won==X or player_won==O:
         return True
     
-    for  row in board:
-        for cell in row:
-            if cell is None:
-                return False
-            
+    # Check if the board is full
+    if not any(map(lambda x: EMPTY in x,board)):
+        return True
+
     return False
 
 
@@ -112,13 +136,15 @@ def utility(board):
     """
     Returns 1 if X has won the game, -1 if O has won, 0 otherwise.
     """
-    winner_player=winner(board)
-    if winner_player==X:
+    player_won=winner(board)
+
+    if player_won==X:
         return 1
-    elif winner_player==O:
+    if player_won==O:
         return -1
     
     return 0
+    
 
 
 
@@ -130,50 +156,65 @@ def minimax(board):
     if terminal(board):
         return None
     
-    current_player = player(board)
-    if current_player== X:
-        candidate_outcome=-math.inf
-        for a in actions(board):
-            possible_board=result(board,a)
-            opponent_value=min_value(possible_board)
-            if opponent_value> candidate_outcome:
-                candidate_outcome=opponent_value
-                candidate_action=a
-    
+    current_player=player(board)
+
+    if current_player==X:
+        player_value=-math.inf
+        for action in actions(board):
+            new_board=result(board,action)
+            opponent_value=min_value(new_board)
+            if opponent_value>player_value:
+                player_value=opponent_value
+                optimal_action=action
+
     if current_player==O:
-        candidate_outcome=math.inf
-        for a in actions(board):
-            possible_board=result(board,a)
-            opponent_value=max_value(possible_board)
-            if opponent_value < candidate_outcome:
-                candidate_outcome=opponent_value
-                candidate_action=a
+        player_value=math.inf
+        for action in actions(board):
+            new_board=result(board,action)
+            opponent_value=max_value(new_board)
+            if opponent_value<player_value:
+                player_value=opponent_value
+                optimal_action=action
 
-    return candidate_action
+    return optimal_action
 
+   
     
-    
 
-            
+
+
+
 def max_value(board):
     if terminal(board):
         return utility(board)
     v=-math.inf
-    for a in actions(board):
-        new_board=result(board,a)
-        v=max(v,min_value(new_board))
-    return v
 
+    for action in actions(board):
+        new_baord=result(board,action)
+        v=max(v,min_value(new_baord))
+    return v
+ 
 
 def min_value(board):
     if terminal(board):
         return utility(board)
-    
+
     v=math.inf
-    for a in actions(board):
-        new_board=result(board,a)
+    for action in actions(board):
+        new_board=result(board,action)
         v=min(v,max_value(new_board))
+    
     return v
+    
+
+                
+
+
+
+
+
+
+
 
     
 
