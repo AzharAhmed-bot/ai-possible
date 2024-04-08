@@ -111,9 +111,6 @@ def winner(board):
 
 
     
-    
-    
-
 
 def terminal(board):
     """
