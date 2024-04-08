@@ -91,9 +91,40 @@ def shortest_path(source, target):
 
     If no possible path, returns None.
     """
+    num_explored=0
+    explored_set=set()
 
-    # TODO
-    raise NotImplementedError
+    # Initialize our stack/queue
+    node=Node(state=source,action=None,parent=None)
+    frontier=QueueFrontier()
+    frontier.add(node)
+
+    while True:
+        if frontier.empty:
+            print("No solution")
+            return None
+    
+        frontier.remove()
+        num_explored+=1
+
+        if node.state==target:
+            movies=[]
+            actor_ids=[]
+            while node.parent is not None:
+                movies.append(node.action)
+                actor_ids.append(node.state)
+                node=node.parent
+            movies.reverse()
+            actor_ids.reverse()
+            return list(zip(movies,actor_ids))
+
+        explored_set.add(node.state)
+
+        for action,state in neighbors_for_person(node.state):
+            if not frontier.contains_state(state) and state not in explored_set:
+                child=Node(state=state,action=action,parent=node)
+                frontier.add(child)
+                node=child
 
 
 def person_id_for_name(name):
