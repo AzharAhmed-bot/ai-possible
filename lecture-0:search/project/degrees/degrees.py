@@ -91,40 +91,55 @@ def shortest_path(source, target):
 
     If no possible path, returns None.
     """
-    num_explored=0
-    explored_set=set()
+    num_explored = 0
+    explored_set = set()
+    goal_test = False
 
     # Initialize our stack/queue
-    node=Node(state=source,action=None,parent=None)
-    frontier=QueueFrontier()
+    node = Node(state=source, action=None, parent=None)
+    frontier = StackFrontier()
     frontier.add(node)
 
     while True:
-        if frontier.empty:
+        if frontier.empty():
             print("No solution")
             return None
-    
-        frontier.remove()
+
+        goal_test = frontier.contains_state(target)
+
+        # Check if we have the goal
+        if goal_test:
+            for node in frontier.frontier:
+                if node.state == target:
+                    movies = []
+                    actor_ids = []
+                    while node.parent is not None:
+                        movies.append(node.action)
+                        actor_ids.append(node.state)
+                        node = node.parent
+                    movies.reverse()
+                    actor_ids.reverse()
+                    return list(zip(movies, actor_ids))
+
+        # No goal, we expand on the node
+        curr_node = frontier.remove()
         num_explored+=1
+        curr_state = curr_node.state
+        # We don't repeat ourselves after exploring the node
+        explored_set.add(curr_state)
 
-        if node.state==target:
-            movies=[]
-            actor_ids=[]
-            while node.parent is not None:
-                movies.append(node.action)
-                actor_ids.append(node.state)
-                node=node.parent
-            movies.reverse()
-            actor_ids.reverse()
-            return list(zip(movies,actor_ids))
+        neighbours = neighbors_for_person(curr_state)
 
-        explored_set.add(node.state)
+        # All available nodes
+        available_nodes = set(map(lambda x: Node(x[1], node, x[0]), neighbours))
 
-        for action,state in neighbors_for_person(node.state):
-            if not frontier.contains_state(state) and state not in explored_set:
-                child=Node(state=state,action=action,parent=node)
-                frontier.add(child)
-                node=child
+        for each_node in available_nodes:
+            if not frontier.contains_state(each_node.state) and each_node.state not in explored_set:
+                frontier.add(each_node)
+
+        
+
+
 
 
 def person_id_for_name(name):
