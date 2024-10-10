@@ -79,19 +79,19 @@ Some of the inference rules include:
  -------------
       α
 ```
--**Implication elimination** 
+- **Implication elimination** 
 ```bash
     α <---> β
  -------------
       (α-->β) ∧(β-->α)
 ```
--**De morgans law**
+- **De morgans law**
 ```bash
 (α V β)'
 --------
 α' ∧ β'
 ```
--**Distributive law**
+- **Distributive law**
 ```bash
   α ∧ (β V δ)
 -----------------
@@ -187,3 +187,32 @@ Then we conclude KB ⊨α
 ```
 
 ### 4. First order logic
+Finally the last one. First order logic allows us to express statements more succinctly that propositional logic. First order logic uses 2 types of symbols:
+- Constants symbols:This basically represents objects like a persons name or name of a house
+- Predicate symbols: This is a function actually that takes an argument and returns true or false. Example:
+```bash
+Person(Azhar) => Means Azhar is a person
+House(Castle) => Means Castle is a house.
+BelongsTo(Castle,Azhar)=> Castle belongs to Azhar
+```
+There are 2 types of First Order Logic:
+#### Universal Quantification
+Fancy way of saying the word "for all" (∀).<br>
+Example:
+```bash
+∀x Belongto(x,Azhar) --> - BelongsTo(x,Takoy)
+
+```
+This means: "For all x that belong to Azhar it doesnt belong to Takoy".
+
+## Existential Quantification
+Fancy way of saying the word "there exists" ∃. <br>
+Example:
+```bash
+∃x House(x) ∧ Belongs(Castle,x)
+```
+This means:"There exists a house x and the house x belongs to a castle and its a house". In short: "Castle belongs to a house".
+
+Finally, thats all is about to know in **Knowledge Engineering**!Byeeeee
+
+
