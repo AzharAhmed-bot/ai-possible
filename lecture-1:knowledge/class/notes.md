@@ -93,8 +93,8 @@ Some of the inference rules include:
 ```
 -**Distributive law**
 ```bash
-α ∧ (β V δ)
-------------
+  α ∧ (β V δ)
+-----------------
 (α ∧ β) V (α ∧ δ)
 ```
 - **Modus ponens**
@@ -112,3 +112,78 @@ Inferencing can be viewed as a search problem with this properties:
 - Transitional model = New knowledge as a result of inferencing
 - Goal test= checking if KB ⊨α
 - Path cost= Number of steps to improve
+
+### 3. Resolution
+Resolution is just a fancy method or rather improved method(excuse me)  of inference. This is another method that is used to prove whether KB ⊨ α. <br>
+It relies on complementary literals. In  a fancy way, it's a powerful inference rul that states that **if one or two atomic propositions in an OR proposition is false, the other has to be true**. Tak the example
+
+```bash
+P V Q
+    P'
+---------
+    Q
+```
+
+What can we use to generate new sentences using inference by resolution? Well that's where clauses come in.<br>
+Clauses are basically disjuction of literals(if this is greek search it out). Thus inference algorithms locate complementary literals to generate new knowledge.<br>
+Take this example:
+```bash
+P V Q & Q V R
+then:
+P' v R
+------
+Q V R
+```
+Clauses enable us to convert and logic statement into a conjuctive Normal Form(CNF). If this is greek to search it out its infact easy.<br>
+Take this example:
+```bash
+(A v B) ∧ (D V E) ∧ (F V G)
+(clause)∧ (clause)∧ (clause)
+```
+If you see above CNF can be defined as disjunction of clauses
+So what are the steps for converting a logical statement into CNF:
+- Eliminate biconditionals
+- Eliminate implications
+- Use de morgans law where necessary 
+- Use distributive law where necessary
+At the point of converting into CNF it maybe necessary to factor out some literals because of duplication.<br>
+Some times an empty clause can occur when we are resolving literlas and its negation eg
+
+```bash
+P
+then:
+    P'
+-------
+    ()-this is an empty clause
+```
+
+So what is the steps for inference by resolution?
+- To determine whether KB ⊨α
+    - Convert (KB ∧  α') into CNF 
+    - Keep checking if we can use resolution to produce new clauses
+    - If we produce an empty clause then KB ⊨α
+    - Else no entailment
+
+Example:
+```bash
+ Does  (A V B) ∧ ( B' V C) ∧ (C')  ⊨ α
+We pick 2 clauses and resolve . I pick ( B' V C) ∧ (C')
+( B' V C) ∧ (C')
+----------------
+        B'- conclusion
+Then we set B' Aside with
+We pick 2 clauses and resolve again. I pick (A V B) and B'
+(A V B) ∧ B'
+-----------
+    A
+Now our new set of clauses are  (A') (B) (A)
+We resolve A
+we get:
+    A'
+----------
+    ()
+Then we conclude KB ⊨α
+
+```
+
+### 4. First order logic
