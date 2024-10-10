@@ -39,3 +39,5 @@ Key terms:
 ### Model checking
 In model checking the AI enumarates over all possible models and checks where if any of the models where the Knowledge base it true then KB ⊨(entails) α. Don't worry about the symbols they'll be easy to understand as we go along. <br>
 In model checking, we try to conclude that α is true based on our knowledge base.Consider this  image below:
+
+![WhatsApp Image 2024-10-10 at 14 37 28](https://github.com/user-attachments/assets/8fe63c4f-2703-4722-896d-2a963aaa45ad)
