@@ -35,3 +35,7 @@ Key terms:
 - **Biconditional** is a logical connective that takes two propositions as input and produces
 - **Tautology** is a proposition that is always true
 
+## How AI gets its knowledge
+### Model checking
+In model checking the AI enumarates over all possible models and checks where if any of the models where the Knowledge base it true then KB ⊨(entails) α. Don't worry about the symbols they'll be easy to understand as we go along. <br>
+In model checking, we try to conclude that α is true based on our knowledge base.Consider this  image below:
