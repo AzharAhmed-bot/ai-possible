@@ -1,41 +1,18 @@
-import pomegranate
-
+from model import model
 from collections import Counter
 
-from model import model
+N=1000
+data=[]
 
-def generate_sample():
-
-    # Mapping of random variable name to sample generated
-    sample = {}
-
-    # Mapping of distribution to sample generated
-    parents = {}
-
-    # Loop over all states, assuming topological order
-    for state in model.states:
-
-        # If we have a non-root node, sample conditional on parents
-        if isinstance(state.distribution, pomegranate.ConditionalProbabilityTable):
-            sample[state.name] = state.distribution.sample(parent_values=parents)
-
-        # Otherwise, just sample from the distribution alone
-        else:
-            sample[state.name] = state.distribution.sample()
-
-        # Keep track of the sampled value in the parents mapping
-        parents[state.distribution] = sample[state.name]
-
-    # Return generated sample
-    return sample
-
-# Rejection sampling
-# Compute distribution of Appointment given that train is delayed
-N = 10000
-data = []
 for i in range(N):
-    sample = generate_sample()
-    if sample["train"] == "delayed":
-        data.append(sample["appointment"])
-print(Counter(data))
+    sample=model.sample(1)
+    # If in the sample, the variable of train has the value delayed, save the sample
+    # Since we are interested in the probability of train delayed we discard train was on time when getting the number of times I have attended the appointment
+    if sample[:,2]==1:
+        data.append(sample[:,3].item())
 
+
+count=Counter(data)
+probability_Of_attending=count[0]/ sum(count.values())
+print(count)
+print(f"probability that you attend given train is on time: {probability_Of_attending:.4f}")
