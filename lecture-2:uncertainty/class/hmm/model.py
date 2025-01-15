@@ -1,30 +1,26 @@
-from pomegranate import *
+from pomegranate.distributions import Categorical,ConditionalCategorical
+from pomegranate.hmm import DenseHMM
+from pomegranate.markov_chain import *
+import numpy as np
 
-# Observation model for each state
-sun = DiscreteDistribution({
-    "umbrella": 0.2,
-    "no umbrella": 0.8
-})
+# Probabulity of carrying umbrella when its sunny
+probability_during_Sunny=torch.tensor([[0.2,0.8]])
 
-rain = DiscreteDistribution({
-    "umbrella": 0.9,
-    "no umbrella": 0.1
-})
+sun=Categorical(probs=probability_during_Sunny)
 
-states = [sun, rain]
+# Probabulity of carrying umbrella when its rainy
+probability_during_Rainy=torch.tensor([[0.9,0.1]])
 
-# Transition model
-transitions = numpy.array(
-    [[0.8, 0.2], # Tomorrow's predictions if today = sun
-     [0.3, 0.7]] # Tomorrow's predictions if today = rain
-)
+rain=Categorical(probs=probability_during_Rainy)
 
-# Starting probabilities
-starts = numpy.array([0.5, 0.5])
+states=[sun,rain]
 
-# Create the model
-model = HiddenMarkovModel.from_matrix(
-    transitions, states, starts,
-    state_names=["sun", "rain"]
-)
-model.bake()
+transition=[
+    [0.8,0.2], # Sunny--->Sunny or Rain
+    [0.3,0.7] # Rain--->Sunny or Rain
+]
+
+start=[0.5,0.5]
+
+model=DenseHMM(states,edges=transition,starts=start)
+
