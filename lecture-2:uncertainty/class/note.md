@@ -53,6 +53,44 @@ Invented by Judea Pearl its actually a data structure that represents the depend
 - Arrows from node to node represent parent child relationship
 - Each node represents a probability of P[X| Parent(x)]
 
+So how does the agent deduce information from this probability model. This is where inferencing comes in
 
+### Inferencing in Probabilistic
+It's the conclusion of new information based on the information we already have. Inferencing has the following properties:
+- Query X:The variable which we want the probability distribution
+- Evidence E: The set of observed events.
+- Hidden Y: This is the event we havent observed
+- Goal: Finally I'll want to know P[X|e]
+For example:
+```bash
+Compute: P[Appointment| light,no]
+e:light rain,no maintenance
+x:appointment
+```
+Thus we use inference by enumeration to find the probability of X given the observed e and hidden y.<br>
+However, using bayesian network can be inefficient,especially when there are multiple random variables. Thus, a good way is to abandon **exact inferencing** and go with **approxiamte inferencing**. We will lose precision but acheive scalability.
 
+## Sampling
+It is a technique for approximate inferencing, where each random variable is sampled for a variable according to its probability distibution. But sometimes instead of discarding samples, we adjust the importance or rather weight onf an evidence, making it more efficient.<br>
+Likelihood weighthood uses the following steps:
+- Start by fixing values for evidence variables
+- Sample the non evidence variables using conditional probablity
+- Weight each sample by its likelihood 
 
+So sampling is essential when working with complex distribution especially when its difficult to calculate distribution and handle dependencies,
+
+## Markov Model
+In this model it  brings the dimension of time. Where we not only include some information that we observed but predict how a variable changes with time.<br>
+**The markov assumption**- States that the current state depends on only a finite number of previous states. For example, how many days am I going to consider when prediction tomorrows weather.<br>
+**The markov chain**- Its a chain of random variables that follow the markov assumption. By construting the transition model we can come up with the markov chain. (ps: I did draw this in my notes)
+
+## Hidden Markov Model
+It's a type of markov model for a system with hidden states(Whats happening in the real world) that generate an observable state(what the agent discovers). Sometimes the AI has some measurement of the world but has no access to the precide state of the world. For example:
+- In measuring a web page user engagement, the hidden state is the user engagement the observable state is the web analytics.<br>
+
+**The sensor markov assumption**-States that the evidence variable only depends on the observable states. Sometimes it can ignore other factors such as personality of the person which is had to predict.<br>
+Based on the Hidden Markov model, multiple tasks can be achieved:
+- Filtering: given the observation from start to now,calculate the probability distribution for the current state.
+- Prediction: given the observation from start to now, calculate the probability distribution for the next state.
+- Smoothing: given the observation from start to now, calculate the probability distibuion for the past state.
+- Most Likely explanation: give the observation from start to now, calculate the most likely sequence of actions.
