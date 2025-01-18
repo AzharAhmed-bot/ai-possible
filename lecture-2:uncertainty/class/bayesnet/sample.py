@@ -12,6 +12,8 @@ for i in range(N):
         data.append(sample[:,3].item())
 
 
+
+# Get the count of the number of times I have attended the appointment
 count=Counter(data)
 probability_Of_attending=count[0]/ sum(count.values())
 print(count)

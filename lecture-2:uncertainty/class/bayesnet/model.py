@@ -17,6 +17,8 @@ probability_Of_maintenance=torch.tensor([
 
 maintenance = ConditionalCategorical(probs=[probability_Of_maintenance])
 
+
+# Define the probabilities for the train variable
 probability_Of_train=torch.tensor([
     [[0.8,0.2],[0.9,0.1]],
     [[0.6,0.4],[0.7,0.3]],
