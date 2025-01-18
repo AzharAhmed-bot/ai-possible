@@ -22,5 +22,7 @@ transition=[
 
 start=[0.5,0.5]
 
+
+# Create the model
 model=DenseHMM(states,edges=transition,starts=start)
 
