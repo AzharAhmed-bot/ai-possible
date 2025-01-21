@@ -34,8 +34,6 @@ def backTracking(assignment):
     return None
 
 
-
-
 def select_unassigned_variable(assignment):
     for variable in VARIABLES:
         if variable not in assignment:
