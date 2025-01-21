@@ -1,14 +1,9 @@
 from constraint import *
 
-problem = Problem()
+problem=Problem()
 
-# Add variables
-problem.addVariables(
-    ["A", "B", "C", "D", "E", "F", "G"],
-    ["Monday", "Tuesday", "Wednesday"]
-)
-
-# Add constraints
+course=["A","B","C","D","E","F","G"]
+exam_day=["Monday","Tuesday","Wednesday"]
 CONSTRAINTS = [
     ("A", "B"),
     ("A", "C"),
@@ -22,9 +17,14 @@ CONSTRAINTS = [
     ("E", "G"),
     ("F", "G")
 ]
-for x, y in CONSTRAINTS:
-    problem.addConstraint(lambda x, y: x != y, (x, y))
 
-# Solve problem
+problem.addVariables(course,exam_day)
+
+for (x,y) in CONSTRAINTS:
+    problem.addConstraint(lambda x,y:x!=y,(x,y))
+
 for solution in problem.getSolutions():
-    print(solution)
+    print(solution) 
+
+
+
