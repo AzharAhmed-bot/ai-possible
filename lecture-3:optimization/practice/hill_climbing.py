@@ -21,7 +21,7 @@ class Classroom:
             for j in range(self.grid_size):
                 student=grid[i][j]
                 neighbours=[
-                    (i-1,j),(i+j,i),
+                    (i-1,j),(i+1,i),
                     (i,j-1),(i,j+1)
                 ]
                 for ni,nj in neighbours:
@@ -29,6 +29,18 @@ class Classroom:
                         neighbour=grid[ni][nj] 
                         cost+=self.disturbance_matrix[student-1][neighbour-1]
         return cost
+    
+    def get_neighbours(self, grid):
+        neighbours = []
+        for i in range(self.grid_size):
+            for j in range(self.grid_size):
+                for x in range(self.grid_size):
+                    for y in range(self.grid_size):
+                        if x != i or y != j:
+                            new_grid = [row[:] for row in grid]
+                            new_grid[i][j], new_grid[x][y] = new_grid[x][y], new_grid[i][j]
+                            neighbours.append(new_grid)
+        return neighbours
     
 
 grid_size=2
@@ -45,6 +57,8 @@ class4Yellow=Classroom(grid_size,students,disturbance_score)
 grid=class4Yellow.generate_random_grid()
 print(grid)
 cost=class4Yellow.get_cost(grid)
+neighbours=class4Yellow.get_neighbours(grid)
 print(cost)
+print(neighbours)
 
 
