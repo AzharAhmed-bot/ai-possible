@@ -32,14 +32,15 @@ class Classroom:
     
     def get_neighbours(self, grid):
         neighbours = []
-        for i in range(self.grid_size):
-            for j in range(self.grid_size):
-                for x in range(self.grid_size):
-                    for y in range(self.grid_size):
-                        if x != i or y != j:
-                            new_grid = [row[:] for row in grid]
-                            new_grid[i][j], new_grid[x][y] = new_grid[x][y], new_grid[i][j]
-                            neighbours.append(new_grid)
+        positions=[
+            (i,j) for i in range(self.grid_size) for j in range(self.grid_size)
+        ]
+        for idx1,(i1,j1) in enumerate(positions):
+            for i2,j2 in positions[idx1+1:]:
+                new_grid=grid.copy()
+                new_grid[i1][j1],new_grid[i2][j2]=new_grid[i2][j2],new_grid[i1][j1]
+                neighbours.append(new_grid)
+            
         return neighbours
     
 
@@ -58,7 +59,7 @@ grid=class4Yellow.generate_random_grid()
 print(grid)
 cost=class4Yellow.get_cost(grid)
 neighbours=class4Yellow.get_neighbours(grid)
-print(cost)
+# print(cost)
 print(neighbours)
 
 
