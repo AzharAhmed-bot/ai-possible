@@ -95,6 +95,7 @@ for row in final_grid:
     print(row)
 print(f"Final cost: {final_cost}")
 
+
 print("Final seating arrangement of Random Restart")
 for row in best_grid:
     print(row)
