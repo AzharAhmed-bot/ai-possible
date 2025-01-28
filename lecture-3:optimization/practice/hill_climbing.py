@@ -17,17 +17,20 @@ class Classroom:
     
     def get_cost(self,grid):
         cost=0
+        is_visited=set()
         for i in range(self.grid_size):
             for j in range(self.grid_size):
                 student=grid[i][j]
                 neighbours=[
-                    (i-1,j),(i+1,i),
+                    (i-1,j),(i+1,j),
                     (i,j-1),(i,j+1)
                 ]
                 for ni,nj in neighbours:
                     if 0<=ni<self.grid_size and 0<=nj<self.grid_size:
                         neighbour=grid[ni][nj] 
-                        cost+=self.disturbance_matrix[student-1][neighbour-1]
+                        if (student,neighbour) not in is_visited and (neighbour,student) not in is_visited:
+                            cost+=self.disturbance_matrix[student][neighbour]
+                            is_visited.add((student,neighbour))
         return cost
     
     def get_neighbours(self, grid):
@@ -88,7 +91,7 @@ disturbance_score=[
 
 class4Yellow=Classroom(grid_size,students,disturbance_score)
 final_grid,final_cost=class4Yellow.hill_climbing()
-best_grid,best_cost=class4Yellow.random_restart(10)
+best_grid,best_cost=class4Yellow.random_restart(20)
 
 print("Final seating arrangement of Hill climbing")
 for row in final_grid:
