@@ -197,6 +197,7 @@ class CrosswordCreator():
                         if word1[a]!=word2[b]:
                             return False
         return True
+    
 
     def order_domain_values(self, var, assignment):
         """
