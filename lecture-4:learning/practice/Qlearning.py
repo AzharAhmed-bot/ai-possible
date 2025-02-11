@@ -103,3 +103,12 @@ class TrafficLightQLearner:
 t1_agent=TrafficLightQLearner()
 t1_agent.train(1000)
 t1_agent.test(60)
+
+
+
+
+
+
+
+
+
