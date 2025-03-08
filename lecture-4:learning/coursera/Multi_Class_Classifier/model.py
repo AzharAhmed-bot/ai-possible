@@ -26,23 +26,16 @@ continuous_columns=data.select_dtypes(include=['float64']).columns.tolist()
 # Standardize the them
 scaler=StandardScaler()
 scaled_features=scaler.fit_transform(data[continuous_columns])
-# Convert to data from array
 scaled_df=pd.DataFrame(scaled_features, columns=scaler.get_feature_names_out(continuous_columns))
-# print(scaled_features)
-# print(continuous_columns)
-
-# Combine with original data
 scaled_data=pd.concat([data.drop(columns=continuous_columns),scaled_df],axis=1)
 
 
 categorical_columns=data.select_dtypes(include=['object']).columns.tolist()
 categorical_columns.remove('NObeyesdad')
-
-
 encoder=OneHotEncoder(sparse_output=False, drop='first')
 encoded_features=encoder.fit_transform(data[categorical_columns])
-
-# Convert to data from array
+print(encoded_features)
+print(categorical_columns)
 encoded_df=pd.DataFrame(encoded_features,columns=encoder.get_feature_names_out(categorical_columns))
 
 
