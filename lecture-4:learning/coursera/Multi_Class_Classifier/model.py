@@ -66,7 +66,7 @@ coef_=ovr_model.coef_
 feature_imporance=np.mean(np.abs(coef_),axis=0)
 plt.barh(evidence.columns,feature_imporance)
 plt.xlabel("Feature importance")
-plt.savefig("feature.png")
+plt.savefig("ovr_feature.png")
 
 
 
@@ -77,3 +77,9 @@ ovo_prediction=ovo_model.predict(x_test)
 print("One vs One Strategy")
 print(f"Accuracy: {np.round(100* accuracy_score(y_test,ovo_prediction),2)}%")
 
+coef_=np.array([est.coef_.flatten for est in ovo_model.estimators_])
+
+feature_imporance=np.mean(np.abs(coef_),axis=0)
+plt.barh(evidence.columns,feature_imporance)
+plt.x_label("Feature importance")
+plt.savefig("ovo_feature.png")
