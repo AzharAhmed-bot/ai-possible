@@ -21,6 +21,9 @@ x_scaled=scaler.fit_transform(X)
 
 
 #T-SNE
+# n_components: The number of dimensions for the output (default = 2).
+# perplexity: Balances attention between local and global aspects of the data (default = 30).
+# learning_rate: Controls the step size during optimization (default = 200).
 tsne_model=TSNE(n_components=2,random_state=42,perplexity=30,max_iter=1000)
 x_tsne=tsne_model.fit_transform(x_scaled)
 fig=plt.figure(figsize=(8,6))
@@ -35,6 +38,9 @@ plt.savefig('tsne.png')
 
 
 # UMAP
+# n_neighbors: Controls the local neighborhood size (default = 15).
+# min_dist: Controls the minimum distance between points in the embedded space (default = 0.1).
+# n_components: The dimensionality of the embedding (default = 2).
 umap_model=UMAP(n_components=2,random_state=42,min_dist=0.5,spread=1,n_jobs=1)
 x_umap=umap_model.fit_transform(x_scaled)
 fig=plt.figure(figsize=(8,6))
