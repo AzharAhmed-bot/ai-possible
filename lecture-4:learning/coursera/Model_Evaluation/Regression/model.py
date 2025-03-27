@@ -23,11 +23,11 @@ df['MedHouseVal']=y_train
 print(df.describe())
 
 # Plot the distribution
-# plt.hist(1e5*y_train, bins=30, color='lightblue', edgecolor='black')
-# plt.title(f'Median House Value Distribution\nSkewness: {skew(y_train):.2f}')
-# plt.xlabel('Median House Value')
-# plt.ylabel('Frequency')
-# plt.savefig('distribution.png')
+plt.hist(1e5*y_train, bins=30, color='lightblue', edgecolor='black')
+plt.title(f'Median House Value Distribution\nSkewness: {skew(y_train):.2f}')
+plt.xlabel('Median House Value')
+plt.ylabel('Frequency')
+plt.savefig('distribution.png')
 
 model=RandomForestRegressor(n_estimators=100,random_state=42)
 model.fit(x_train,y_train)
@@ -51,26 +51,27 @@ print("RMSE: {:.4f}".format(rmse))
 print("R2: {:.4f}".format(r2))
 
 
-# plt.scatter(y_test,y_pred,alpha=0.5,color="blue")
-# plt.plot([y_test.min(),y_test.max()],[y_test.min(),y_test.max()],'k--',lw=2)
-# plt.title("Random Forest Regression - Actual vs Predicted")
-# plt.xlabel("Actual values")
-# plt.ylabel("Predicted values")
-# plt.savefig("actual_vs_predicted.png")
+plt.scatter(y_test,y_pred,alpha=0.5,color="blue")
+plt.plot([y_test.min(),y_test.max()],[y_test.min(),y_test.max()],'k--',lw=2)
+plt.title("Random Forest Regression - Actual vs Predicted")
+plt.xlabel("Actual values")
+plt.ylabel("Predicted values")
+plt.savefig("actual_vs_predicted.png")
 
 
 
 importances = model.feature_importances_
 indices = np.argsort(importances)[::-1]
 features = data.feature_names
+print(features)
 
 # Plot feature importances
-# plt.bar(range(x.shape[1]), importances[indices],  align="center")
-# plt.xticks(range(x.shape[1]), [features[i] for i in indices], rotation=45)
-# plt.xlabel("Feature")
-# plt.ylabel("Importance")
-# plt.title("Feature Importances in Random Forest Regression")
-# plt.savefig('feature_importances.png')
+plt.bar(range(x.shape[1]), importances[indices],  align="center")
+plt.xticks(range(x.shape[1]), [features[i] for i in indices], rotation=45)
+plt.xlabel("Feature")
+plt.ylabel("Importance")
+plt.title("Feature Importances in Random Forest Regression")
+plt.savefig('feature_importances.png')
 
 
 # Plot histogram of the residual errors:
@@ -93,10 +94,14 @@ residuals_df=pd.DataFrame({
 residuals_df=residuals_df.sort_values(by='Actual')
 
 
+
+
 plt.scatter(residuals_df['Actual'],residuals_df['Residuals'],marker='o',alpha=0.4,ec='k')
 plt.title('Median House Value Prediciton Residuals Ordered by Actual Median Prices')
 plt.xlabel('Actual Values (Sorted)')
 plt.ylabel('Residuals')
 plt.grid(True)
 plt.savefig('residuals_ordered.png')
+
+
 
