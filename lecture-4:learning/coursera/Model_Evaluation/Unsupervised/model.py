@@ -157,6 +157,8 @@ plt.title('Davies-Bouldin Index vs. k')
 plt.xlabel('Number of clusters (k)')
 plt.ylabel('Davies-Bouldin Index')
 
+
+
 plt.tight_layout()
 plt.savefig('elbow.png')
 
