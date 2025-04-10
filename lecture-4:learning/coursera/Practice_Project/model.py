@@ -97,19 +97,19 @@ conf_matrix=confusion_matrix(y_test,y_pred)
 conf_matrix_2=confusion_matrix(y_test,y_pred_2)
 
 
-sns.heatmap(conf_matrix,annot=True,cmap='Blues',fmt='d')
-plt.title("Confusion matrix for Titanic dataset")
-plt.xlabel("Predicted")
-plt.ylabel("Actual")
-plt.tight_layout()
-plt.savefig('confusion_matrix.png')
+# sns.heatmap(conf_matrix,annot=True,cmap='Blues',fmt='d')
+# plt.title("Confusion matrix for Titanic dataset")
+# plt.xlabel("Predicted")
+# plt.ylabel("Actual")
+# plt.tight_layout()
+# plt.savefig('confusion_matrix.png')
 
-sns.heatmap(conf_matrix_2,annot=True,cmap='Blues',fmt='d')
-plt.title("Confusion matrix for Titanic dataset using Logistic Regression")
-plt.xlabel("Predicted")
-plt.ylabel("Actual")
-plt.tight_layout()
-plt.savefig('confusion_matrix_2.png')
+# sns.heatmap(conf_matrix_2,annot=True,cmap='Blues',fmt='d')
+# plt.title("Confusion matrix for Titanic dataset using Logistic Regression")
+# plt.xlabel("Predicted")
+# plt.ylabel("Actual")
+# plt.tight_layout()
+# plt.savefig('confusion_matrix_2.png')
 
 
 # Trace back to access one hot encoder feature names
@@ -137,16 +137,16 @@ importance_df_2=pd.DataFrame({
 
 
 # Plotting
-plt.figure(figsize=(10, 6))
-plt.barh(importance_df['Feature'], importance_df['Importance'], color='skyblue')
-plt.gca().invert_yaxis() 
-plt.title('Most Important Features in predicting whether a passenger survived')
-plt.xlabel('Importance Score')
-plt.savefig('feature_importance.png')
+# plt.figure(figsize=(10, 6))
+# plt.barh(importance_df['Feature'], importance_df['Importance'], color='skyblue')
+# plt.gca().invert_yaxis() 
+# plt.title('Most Important Features in predicting whether a passenger survived')
+# plt.xlabel('Importance Score')
+# plt.savefig('feature_importance.png')
 
 #Plotting 2
 plt.figure(figsize=(10, 6))
-plt.barh(importance_df_2['Feature'], importance_df_2['Coefficient'], color='skyblue')
+plt.barh(importance_df_2['Feature'], importance_df_2['Coefficient'].abs(), color='skyblue')
 plt.gca().invert_yaxis()
 plt.title('Feature Coefficient magnitudes for Logistic Regression model')
 plt.xlabel('Coefficient Magnitude')
