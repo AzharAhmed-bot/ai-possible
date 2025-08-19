@@ -98,6 +98,9 @@ from sklearn.datasets import make_regression
 
 x,y,ideal_coef=make_regression(n_samples=100,n_features=100,n_informative=10,noise=10,random_state=42,coef=True)
 # Matrix multiplication
+print("x",x)
+print()
+print(ideal_coef)
 ideal_predictions= x @ ideal_coef
 
 x_train,x_test,y_train,y_test,ideal_train,ideal_test=train_test_split(
