@@ -130,7 +130,10 @@ def readAndWritePixelRegion():
 
     plt.figure()
     plt.imshow(imgRGB)
-    plt.show()    
+    plt.show()
+
+
+    
 
 
 

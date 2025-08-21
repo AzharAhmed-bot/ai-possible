@@ -1,0 +1,27 @@
+{
+    "github.copilot.enable": {
+        "*": false
+    },
+    "C_Cpp.copilotHover": "disabled",
+    "editor.suggestOnTriggerCharacters": false,
+    "editor.suggest.selectionMode": "always",
+    "editor.suggest.showWords": true,
+    "editor.suggest.showClasses": true,
+    "editor.suggest.showColors": true,
+    "editor.suggest.showConstants": true,
+    "editor.suggest.showConstructors": true,
+    "editor.suggest.showCustomcolors": true,
+    "editor.suggest.showDeprecated": true,
+    "editor.suggest.showEnumMembers": true,
+    "editor.suggest.showEnums": true,
+    "editor.suggest.showEvents": true,
+    "editor.suggest.showFields": true,
+    "editor.suggest.showFiles": true,
+    "editor.suggest.showFunctions": true,
+    "editor.suggest.showInlineDetails": true,
+    "editor.suggest.showInterfaces": true,
+    "editor.suggest.showSnippets": true,
+    "editor.suggest.showVariables": true,
+    "editor.suggest.shareSuggestSelections": true,
+    "emmet.useInlineCompletions": true
+}
