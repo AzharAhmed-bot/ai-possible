@@ -26,8 +26,8 @@ def writeImage():
 def videoFromWebcam():
     cap = cv.VideoCapture('/dev/video0', cv.CAP_V4L2)
     cap.set(cv.CAP_PROP_FOURCC, cv.VideoWriter_fourcc(*'MJPG'))
-    cap.set(cv.CAP_PROP_FRAME_WIDTH, 640)
-    cap.set(cv.CAP_PROP_FRAME_HEIGHT, 480)
+    # cap.set(cv.CAP_PROP_FRAME_WIDTH, 640)
+    # cap.set(cv.CAP_PROP_FRAME_HEIGHT, 480)
     if not cap.isOpened():
         print("❌ Cannot open webcam")
         exit()
@@ -64,8 +64,8 @@ def videoFromFile():
 def writeVideoToFile():
     cap = cv.VideoCapture('/dev/video0', cv.CAP_V4L2)
     cap.set(cv.CAP_PROP_FOURCC,cv.VideoWriter_fourcc(*'MJPG'))
-    cap.set(cv.CAP_PROP_FRAME_WIDTH, 640)
-    cap.set(cv.CAP_PROP_FRAME_HEIGHT,480)
+    # cap.set(cv.CAP_PROP_FRAME_WIDTH, 640)
+    # cap.set(cv.CAP_PROP_FRAME_HEIGHT,480)
 
 
     root = os.getcwd()
@@ -140,8 +140,8 @@ def readAndWritePixelRegion():
 if __name__ == "__main__":
     # readImage()
     # writeImage()
-    # videoFromWebcam()
+    videoFromWebcam()
     # videoFromFile()
     # writeVideoToFile()
     # readWritePixelValues()
-    readAndWritePixelRegion()
+    # readAndWritePixelRegion()
