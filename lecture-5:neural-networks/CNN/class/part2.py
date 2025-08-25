@@ -91,7 +91,7 @@ def grayscale():
 # Value = Brightness
 def hsvColorSegmentation():
     root = os.getcwd()
-    imgPath = os.path.join(root, 'Images/cat.jpg')
+    imgPath = os.path.join(root, 'Images/Jaguar.jpg')
     img = cv.imread(imgPath)
     imgRGB = cv.cvtColor(img, cv.COLOR_BGR2RGB)
 
@@ -113,6 +113,6 @@ def hsvColorSegmentation():
 if __name__ == "__main__":
     # pureColors()
     # bgrChannelGrayScale()
-    bgrChannelColor()
+    # bgrChannelColor()
     # grayscale()
-    # hsvColorSegmentation()
+    hsvColorSegmentation()

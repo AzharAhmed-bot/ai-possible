@@ -1,6 +1,7 @@
 import cv2 as cv
 import os
 import matplotlib.pyplot as plt
+import numpy as np
 
 
 def callback():
@@ -70,8 +71,50 @@ def cannyEdge():
 
 
 
+def houghLineTransform():
+    root = os.getcwd()
+    imgPath = os.path.join(root, 'Images/Jaguar.jpg')
+    img = cv.imread(imgPath)
+    imgBlur = cv.GaussianBlur(img,(21,21),2) # To reduce noise when getting the edges
+    cannyEdge = cv.Canny(imgBlur,50,180)
+
+    plt.figure()
+    plt.subplot(2,3,1)
+    plt.imshow(img)
+
+    plt.subplot(2,3,2)
+    plt.imshow(imgBlur)
+
+    plt.subplot(2,3,3)
+    plt.imshow(cannyEdge, cmap='gray')
+
+
+    distResol = 1
+    angleResol = np.pi /180
+    threshold = 150
+    lines = cv.HoughLines(cannyEdge, distResol, angleResol, threshold)
+    k = 3000
+
+    for curLines in lines:
+        rho,theta = curLines[0]
+        a =  np.cos(theta)
+        b = np.sin(theta)
+        x0 = a*rho
+        y0 = b*rho
+        x1 = int(x0 + k*b)
+        y1 = int(y0 - k*a)
+        x2 = int(x0 - k*b)
+        y2 = int(y0 + k*a)
+        cv.line(img,(x1,y1),(x2,y2),(0,0,255),2)
+        
+    plt.subplot(2,3,4)
+    plt.imshow(img)
+    plt.show()
+
+
 
 
 if __name__== "__main__":
     # imageGradient()
-    cannyEdge()
+    # cannyEdge()
+    houghLineTransform()
