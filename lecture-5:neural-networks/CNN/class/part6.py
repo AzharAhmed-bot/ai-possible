@@ -89,9 +89,10 @@ def houghLineTransform():
     plt.imshow(cannyEdge, cmap='gray')
 
 
-    distResol = 1
-    angleResol = np.pi /180
-    threshold = 150
+    distResol = 1  # Step size in pixels for rho (the perpendicular distance from origin to the line)
+    angleResol = np.pi / 180  # Step size in radians for theta (angle of the perpendicular line)
+    threshold = 150  # Minimum number of votes in accumulator for a line to be considered valid
+
     lines = cv.HoughLines(cannyEdge, distResol, angleResol, threshold)
     k = 3000
 
@@ -104,17 +105,47 @@ def houghLineTransform():
         x1 = int(x0 + k*b)
         y1 = int(y0 - k*a)
         x2 = int(x0 - k*b)
-        y2 = int(y0 + k*a)
+        y2 = int(y0 + k*a) 
         cv.line(img,(x1,y1),(x2,y2),(0,0,255),2)
         
     plt.subplot(2,3,4)
     plt.imshow(img)
     plt.show()
 
+def harrisCorner():
+    root = os.getcwd()
+    imgPath = os.path.join(root, 'Images/Jaguar.jpg')
+    img = cv.imread(imgPath)
+    imgRGB = cv.cvtColor(img,cv.COLOR_BGR2RGB)
+    imgGray = cv.cvtColor(img,cv.COLOR_BGR2GRAY)
+    imgGray = np.float32(imgGray) # This con
 
+    plt.figure()
+    plt.subplot(2,3,1)
+    plt.imshow(imgRGB)
 
+    plt.subplot(2,3,2)
+    plt.imshow(imgGray,cmap='gray')
+    
+    blockSize = 5 # Window size
+    sobelSize = 3 # Sobel kernel size
+    k = 0.04 # 
+
+    harris = cv.cornerHarris(imgGray,blockSize,sobelSize,k)
+
+    plt.subplot(2,3,3)
+    plt.imshow(harris)
+    # plt.show()
+
+    plt.subplot(2,3,4)
+    imgRGB[harris > 0.05*harris.max()] = [255,0,0]
+    plt.imshow(imgRGB)
+    plt.show()
+
+ 
 
 if __name__== "__main__":
     # imageGradient()
     # cannyEdge()
-    houghLineTransform()
+    # houghLineTransform()
+    harrisCorner()

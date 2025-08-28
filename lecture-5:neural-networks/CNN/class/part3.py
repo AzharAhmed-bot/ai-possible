@@ -110,8 +110,28 @@ def histogramRegion():
     plt.show()
 
 
+def imageContours():
+    root = os.getcwd()
+    imgPath = os.path.join(root, 'Images/Jaguar.jpg')
+    img = cv.imread(imgPath)
+    gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
+
+    _, thresh = cv.threshold(gray, 127, 255, cv.THRESH_BINARY)
+    contours, hierarchy = cv.findContours(thresh, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_NONE)
+
+    for contour in contours:
+        area = cv.contourArea(contour)
+        if area > 500:
+            cv.drawContours(img, [contour], -1, (255, 0, 0), 3)
+
+    cv.imshow("Contours", img)
+    cv.waitKey(0)
+    cv.destroyAllWindows()
+
+
 if __name__ == '__main__':
-    imageResize()
+    # imageResize()
     # grayhistogram()
     # colorHistogram()
     # histogramRegion()
+    imageContours()
