@@ -1,5 +1,15 @@
 import numpy as np
+import matplotlib as _mpl
+_mpl.use("Agg")  # headless backend: save figures to files instead of opening a window
 import matplotlib.pyplot as plt
+import os as _os
+_os.makedirs("plots", exist_ok=True)
+_FIG_N = [0]
+def _save():
+    """Save the current figure to plots/figure_NN.png (replaces plt.show)."""
+    _FIG_N[0] += 1
+    plt.savefig(_os.path.join("plots", f"figure_{_FIG_N[0]:02d}.png"), dpi=150, bbox_inches="tight")
+    plt.close()
 import pandas as pd
 
 # 2x3 grid of rewards
@@ -159,7 +169,7 @@ plt.xlabel('Episode')
 plt.ylabel('Avg Total Reward')
 plt.grid(True, linestyle='--', alpha=0.5)
 plt.tight_layout()
-plt.show()
+_save()
 
 # Visualise the Q-table as a heatmap for easy reading
 plt.figure(figsize=(8, 5))
@@ -170,4 +180,4 @@ sns.heatmap(sns_data, annot=True, fmt='.2f', cmap='RdYlGn', center=0,
             linewidths=0.5, cbar_kws={'label': 'Q-Value'})
 plt.title('Q-Table Heatmap (States × Actions)', fontsize=13)
 plt.tight_layout()
-plt.show()
+_save()

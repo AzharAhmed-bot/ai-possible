@@ -1,6 +1,16 @@
 import numpy as np
 import pandas as pd
+import matplotlib as _mpl
+_mpl.use("Agg")  # headless backend: save figures to files instead of opening a window
 import matplotlib.pyplot as plt
+import os as _os
+_os.makedirs("plots", exist_ok=True)
+_FIG_N = [0]
+def _save():
+    """Save the current figure to plots/figure_NN.png (replaces plt.show)."""
+    _FIG_N[0] += 1
+    plt.savefig(_os.path.join("plots", f"figure_{_FIG_N[0]:02d}.png"), dpi=150, bbox_inches="tight")
+    plt.close()
 import seaborn as sns
 
 from sklearn.model_selection import train_test_split
@@ -19,7 +29,7 @@ df = pd.read_csv('loan_data.csv', index_col=0)
 
 print('Shape:', df.shape)
 print('\nFirst 5 rows:')
-display(df.head())
+print(df.head())
 print('\nData types:')
 print(df.dtypes)
 print('\nMissing values:')
@@ -37,7 +47,7 @@ plt.ylabel('Count')
 plt.xticks(rotation=0)
 plt.grid(axis='y', linestyle='--', alpha=0.5)
 plt.tight_layout()
-plt.show()
+_save()
 
 # 'purpose' is categorical — encode it to numeric
 le = LabelEncoder()
@@ -100,7 +110,7 @@ axes[1].grid(axis='y', linestyle='--', alpha=0.5)
 plt.xticks(rotation=45, ha='right')
 
 plt.tight_layout()
-plt.show()
+_save()
 
 # Perceptron is the simplest neural network — a single-layer linear classifier.
 # It updates weights based on misclassified samples only (no gradient / probabilities).
@@ -128,7 +138,7 @@ sns.heatmap(cm_perc, annot=True, fmt='d', cmap='Oranges',
             yticklabels=['True: Paid', 'True: Not Paid'])
 plt.title('Perceptron — Confusion Matrix')
 plt.tight_layout()
-plt.show()
+_save()
 
 # Side-by-side accuracy comparison
 models      = ['Random Forest', 'Perceptron']
@@ -147,7 +157,7 @@ plt.title('Model Accuracy Comparison', fontsize=14)
 plt.ylabel('Accuracy')
 plt.grid(axis='y', linestyle='--', alpha=0.5)
 plt.tight_layout()
-plt.show()
+_save()
 
 print('\nSummary:')
 print(f'  Random Forest Accuracy : {accuracies[0]:.4f}')
@@ -171,4 +181,4 @@ plt.title('ROC Curve — Random Forest')
 plt.legend()
 plt.grid(True, linestyle='--', alpha=0.5)
 plt.tight_layout()
-plt.show()
+_save()

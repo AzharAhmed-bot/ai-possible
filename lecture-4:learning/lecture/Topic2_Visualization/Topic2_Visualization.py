@@ -1,4 +1,14 @@
+import matplotlib as _mpl
+_mpl.use("Agg")  # headless backend: save figures to files instead of opening a window
 import matplotlib.pyplot as plt
+import os as _os
+_os.makedirs("plots", exist_ok=True)
+_FIG_N = [0]
+def _save():
+    """Save the current figure to plots/figure_NN.png (replaces plt.show)."""
+    _FIG_N[0] += 1
+    plt.savefig(_os.path.join("plots", f"figure_{_FIG_N[0]:02d}.png"), dpi=150, bbox_inches="tight")
+    plt.close()
 import numpy as np
 
 # 2017 UK General Election approximate vote share
@@ -20,7 +30,7 @@ plt.pie(
 plt.title('2017 General Election — Vote Share by Party', fontsize=14, fontweight='bold')
 plt.axis('equal')   # keeps the pie circular
 plt.tight_layout()
-plt.show()
+_save()
 
 # Generate the first 10 Fibonacci numbers
 def fibonacci(n):
@@ -48,7 +58,7 @@ plt.xticks(x)
 plt.legend()
 plt.grid(True, linestyle='--', alpha=0.5)
 plt.tight_layout()
-plt.show()
+_save()
 
 # Sample monthly profit data (replace with actual CSV read if available)
 months = ['Jan','Feb','Mar','Apr','May','Jun',
@@ -64,7 +74,7 @@ plt.xlabel('Month')
 plt.ylabel('Profit ($)')
 plt.grid(True, linestyle='--', alpha=0.5)
 plt.tight_layout()
-plt.show()
+_save()
 
 # Sample product sales data per year
 products = ['Face Cream', 'Face Wash', 'Toothpaste', 'Shampoo', 'Body Lotion']
@@ -82,7 +92,7 @@ plt.pie(
 plt.title('Units Sold per Product (% of Total)', fontsize=14, fontweight='bold')
 plt.axis('equal')
 plt.tight_layout()
-plt.show()
+_save()
 
 # Same profit data, now with explicit style properties applied
 months = ['Jan','Feb','Mar','Apr','May','Jun',
@@ -106,7 +116,7 @@ plt.ylabel('Profit ($)', fontsize=12, labelpad=8)
 plt.xticks(rotation=45)
 plt.grid(True, color='grey', linestyle=':', linewidth=0.7)
 plt.tight_layout()
-plt.show()
+_save()
 
 # Monthly sales data for Face Cream and Face Wash
 months = ['Jan','Feb','Mar','Apr','May','Jun',
@@ -131,7 +141,7 @@ ax.set_xticklabels(months)
 ax.legend()
 ax.grid(axis='y', linestyle='--', alpha=0.5)
 plt.tight_layout()
-plt.show()
+_save()
 
 # Monthly profit values — histogram shows which profit ranges occur most
 total_profit = [15000, 18000, 12000, 22000, 25000, 21000,
@@ -150,7 +160,7 @@ plt.xlabel('Profit Range ($)')
 plt.ylabel('Frequency (Number of Months)')
 plt.grid(axis='y', linestyle='--', alpha=0.5)
 plt.tight_layout()
-plt.show()
+_save()
 
 np.random.seed(42)
 
@@ -181,4 +191,4 @@ plt.annotate('Median (red line)', xy=(1.05, 65), fontsize=9, color='red')
 
 plt.grid(axis='y', linestyle='--', alpha=0.5)
 plt.tight_layout()
-plt.show()
+_save()

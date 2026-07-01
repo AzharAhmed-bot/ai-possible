@@ -11,7 +11,17 @@
 
 import numpy as np
 import pandas as pd
+import matplotlib as _mpl
+_mpl.use("Agg")  # headless backend: save figures to files instead of opening a window
 import matplotlib.pyplot as plt
+import os as _os
+_os.makedirs("plots", exist_ok=True)
+_FIG_N = [0]
+def _save():
+    """Save the current figure to plots/figure_NN.png (replaces plt.show)."""
+    _FIG_N[0] += 1
+    plt.savefig(_os.path.join("plots", f"figure_{_FIG_N[0]:02d}.png"), dpi=150, bbox_inches="tight")
+    plt.close()
 from sklearn.linear_model import LinearRegression, LogisticRegression
 from sklearn.metrics import mean_squared_error, r2_score, classification_report
 from sklearn.model_selection import train_test_split
@@ -78,7 +88,7 @@ axes[1].set_title('Oil vs Insulation')
 axes[1].grid(True, linestyle='--', alpha=0.5)
 
 plt.tight_layout()
-plt.show()
+_save()
 
 
 # In[5]:
@@ -186,7 +196,7 @@ plt.title('Logistic Regression: Probability of Making a Putt', fontsize=13)
 plt.legend()
 plt.grid(True, linestyle='--', alpha=0.5)
 plt.tight_layout()
-plt.show()
+_save()
 
 
 # In[11]:
