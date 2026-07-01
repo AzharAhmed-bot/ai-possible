@@ -15,6 +15,29 @@ disease from clinical measurements using a stacked ensemble of classifiers.
 5. **Evaluates** — reports accuracy, precision, recall, F1, ROC-AUC and 5-fold
    cross-validation, plus diagnostic plots.
 
+## The features (what the model looks at)
+
+Each patient is described by 13 measurements. In plain terms:
+
+| Feature    | What it means                                                                 |
+|------------|-------------------------------------------------------------------------------|
+| `age`      | Age in years.                                                                 |
+| `sex`      | Biological sex (1 = male, 0 = female).                                        |
+| `cp`       | Chest pain type (e.g. typical angina, atypical, non-anginal, none).           |
+| `trestbps` | Resting blood pressure (mm Hg), measured on admission.                        |
+| `chol`     | Cholesterol level in the blood (mg/dl).                                        |
+| `fbs`      | Fasting blood sugar > 120 mg/dl? (1 = yes, 0 = no).                            |
+| `restecg`  | Resting ECG (heart electrical activity) result.                               |
+| `thalach`  | Maximum heart rate reached during an exercise stress test (bpm).              |
+| `exang`    | Did exercise trigger chest pain (angina)? (1 = yes, 0 = no).                   |
+| `oldpeak`  | ST depression — how much the ECG dips during exercise vs. rest.               |
+| `slope`    | Slope of that ECG segment during peak exercise (up, flat, or down).           |
+| `ca`       | Number of major blood vessels (0–3) seen as blocked on an X-ray.              |
+| `thal`     | Thalassemia blood-flow result (normal, fixed defect, reversible defect).      |
+
+The model uses these to predict **`target`** — whether the patient has heart
+disease (1) or not (0).
+
 ## The model
 
 A `StackingClassifier` combining three base learners whose predictions are
