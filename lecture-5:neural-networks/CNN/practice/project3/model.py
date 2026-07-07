@@ -14,6 +14,7 @@ def preProcessing(img):
     kernel = np.ones((5, 5))
     imgDial = cv.dilate(canny, kernel, iterations=2)
     imgThres = cv.erode(imgDial, kernel, iterations=1)
+    cv.imshow('Edges (Canny)', canny)
     return imgThres
 
 def getContours(img, drawImg):
@@ -69,12 +70,11 @@ while True:
     imgContours = frame.copy()
     result = preProcessing(frame)
     biggest = getContours(result, imgContours)
+    cv.imshow('Result (dilated edges)', result)
+    cv.imshow('Contours', imgContours)
     if biggest.size != 0:
         imgWraped = getWrap(frame, biggest)
-
-    # cv.imshow('Result', result)
-    cv.imshow('Contours', imgContours) 
-    cv.imshow('Wrap', imgWraped)
+        cv.imshow('Wrap', imgWraped)
 
     if cv.waitKey(1) == ord('q'):
         break
