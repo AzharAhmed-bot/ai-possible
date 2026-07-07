@@ -1,0 +1,6 @@
+# Large data files (exceed GitHub's 100 MB limit — keep local only)
+ML-WORK/data/Data_Visualization.csv
+
+# Python cache
+__pycache__/
+*.pyc

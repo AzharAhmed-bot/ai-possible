@@ -1,5 +1,9 @@
+import os
 import pandas as pd
 import numpy as np
+import matplotlib
+matplotlib.use("Agg")  # headless: save figures without a display
+import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.feature_selection import SelectKBest, f_regression
@@ -60,3 +64,33 @@ print(f"MSE: {mse:.4f}")
 print(f"RMSE: {rmse:.4f}")
 print(f"MAE: {mae:.4f}")
 print(f"R2 Score: {r2:.4f}")
+
+# 8. Diagnostic plots
+os.makedirs("plots", exist_ok=True)
+
+# figure_01: training loss curve — shows the network learning over iterations
+plt.figure(figsize=(7, 5))
+plt.plot(mlp.loss_curve_, color="tab:blue")
+plt.title("MLP Training Loss Curve")
+plt.xlabel("Iteration (epoch)")
+plt.ylabel("Training loss")
+plt.grid(True, alpha=0.3)
+plt.tight_layout()
+plt.savefig("plots/figure_01.png", dpi=120)
+plt.close()
+
+# figure_02: predicted vs actual — points on the diagonal = perfect predictions
+plt.figure(figsize=(6, 6))
+plt.scatter(y_test, y_pred, alpha=0.5, edgecolor="k", linewidth=0.3)
+lims = [min(y_test.min(), y_pred.min()), max(y_test.max(), y_pred.max())]
+plt.plot(lims, lims, "r--", label="perfect prediction")
+plt.title(f"Predicted vs Actual  (R² = {r2:.3f})")
+plt.xlabel("Actual y")
+plt.ylabel("Predicted y")
+plt.legend()
+plt.grid(True, alpha=0.3)
+plt.tight_layout()
+plt.savefig("plots/figure_02.png", dpi=120)
+plt.close()
+
+print("Saved plots to plots/figure_01.png and plots/figure_02.png")

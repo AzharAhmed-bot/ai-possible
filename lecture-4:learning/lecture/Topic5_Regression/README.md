@@ -31,10 +31,32 @@ predicting a **probability** (logistic regression).
 
 ## Plots (in [`plots/`](plots/))
 
-| File            | What it shows                                                              |
-|-----------------|---------------------------------------------------------------------------|
-| `figure_01.png` | Scatter plots of oil vs temperature and oil vs insulation (the raw trends). |
-| `figure_02.png` | Observed putt success rates with the fitted logistic probability curve.   |
+### `figure_01.png` — Oil vs Temperature and Oil vs Insulation (two scatter plots)
+
+**What it shows:** two side-by-side scatter plots. Left: each home's outside
+temperature (x) against its oil use (y). Right: each home's insulation (x)
+against its oil use (y).
+
+**How to read it:** both clouds of dots slope **downward** from left to right —
+as temperature rises, oil use falls, and as insulation thickens, oil use falls
+too. That downward slope is the visual version of the two **negative
+coefficients** in the equation. The tighter and straighter the band of dots, the
+stronger that relationship — which is why a simple straight-line model fits so
+well here (R² = 0.97).
+
+### `figure_02.png` — Putt success rate with the fitted logistic curve
+
+**What it shows:** red dots are the **actual** make-rate observed at each putt
+length; the blue S-shaped line is the model's **predicted** probability of making
+the putt.
+
+**How to read it:** the curve slides downhill — short putts sit high (likely
+made), long putts sit low (likely missed). Because the red dots fall close to the
+blue curve, the model captures the real pattern well. The characteristic
+**S-shape** (flat near the top and bottom, steep in the middle) is what makes
+logistic regression different from a straight line: probabilities can never go
+above 1 or below 0, so the curve levels off at both ends instead of shooting past
+them.
 
 ## Run it
 

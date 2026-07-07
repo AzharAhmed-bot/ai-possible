@@ -25,10 +25,29 @@ features, then **Ridge** builds a stable model on just those features.
 
 ## Plots (in [`plots/`](plots/))
 
-| File            | What it shows                                                            |
-|-----------------|--------------------------------------------------------------------------|
-| `figure_01.png` | Coefficients of the Lasso-selected features (non-zero = kept).           |
-| `figure_02.png` | Ridge predictions vs actual values; points on the dashed line = perfect. |
+### `figure_01.png` — Lasso feature coefficients (bar chart)
+
+**What it shows:** one bar per feature, its height (and direction) being the
+**weight** Lasso gave that feature.
+
+**How to read it:** a **taller** bar = a feature with a bigger say in the
+prediction; bars **above zero** push the target up, bars **below zero** push it
+down. Any feature Lasso judged useless has been shrunk to a **zero-height bar** —
+that's the "automatic feature selection" in action (here Lasso kept 7 of 8). In
+short: the surviving bars are the features that actually matter, and their size
+tells you how much.
+
+### `figure_02.png` — Ridge: predicted vs actual (scatter)
+
+**What it shows:** each dot is one test row — its true value (x-axis) against the
+model's prediction (y-axis). The red dashed line is the "perfect prediction" line
+(predicted = actual).
+
+**How to read it:** dots that sit **right on the dashed line** were predicted
+almost exactly; dots **above** the line were over-predicted, dots **below** were
+under-predicted. Here the dots hug the line tightly across the whole range, which
+is the visual proof behind the excellent **R² = 0.99** — the model is accurate
+and isn't biased high or low at any part of the scale.
 
 ## Note on the data
 
