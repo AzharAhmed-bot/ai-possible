@@ -1,0 +1,9 @@
+# Combined requirements for running tests and the Task 4 analysis suite
+# from the repository root. (server/ and load_balancer/ have their own
+# minimal requirements.txt used inside their respective Docker images.)
+flask==3.0.3
+requests==2.32.3
+docker==7.1.0
+aiohttp==3.9.5
+matplotlib==3.9.0
+pytest==8.2.2

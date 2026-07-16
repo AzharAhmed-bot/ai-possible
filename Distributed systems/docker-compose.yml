@@ -1,0 +1,42 @@
+version: "3.9"
+
+services:
+  load_balancer:
+    build: ./load_balancer
+    image: lb-loadbalancer:latest
+    container_name: load_balancer
+    ports:
+      - "5000:5000"       # Only the load balancer is exposed to the host
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock   # lets LB spawn/stop containers
+    privileged: true
+    environment:
+      N: "3"
+      NUM_SLOTS: "512"
+      NUM_VIRTUAL_SERVERS: "9"
+      DOCKER_NETWORK: "net1"
+      SERVER_IMAGE: "lb-server:latest"
+      HEARTBEAT_INTERVAL: "5"
+      HEARTBEAT_TIMEOUT: "2"
+    networks:
+      net1:
+        aliases:
+          - load_balancer
+
+  # The three initial server replicas are spawned dynamically by the load
+  # balancer itself on startup (see _bootstrap_initial_servers in app.py),
+  # NOT declared here. This service definition is kept only so that
+  # `docker-compose build` also builds the server image the load balancer
+  # will use when spawning replicas.
+  server_image_builder:
+    build: ./server
+    image: lb-server:latest
+    container_name: server_image_builder_dummy
+    entrypoint: ["true"]
+    networks:
+      - net1
+
+networks:
+  net1:
+    driver: bridge
+    name: net1
